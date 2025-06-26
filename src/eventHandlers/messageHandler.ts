@@ -1,6 +1,7 @@
 import { Client, Events } from 'discord.js';
 import config from '../config';
 import { awardCurrency } from '../utils/unbelieva';
+import { addPoints } from '../utils/pointsManager';
 import { gameSessions, numberEmoji } from '../utils/botConstants';
 import { handleGuessCooldown } from '../utils/aiHintUtils';
 
@@ -16,7 +17,8 @@ export function setupMessageHandler(client: Client) {
 
       const guess = message.content.slice(1).trim().toLowerCase();
       const userId = message.author.id;
-      const username = message.author.toString();
+      const userNamePing = message.author.toString();
+      const userName = message.author.username;
       const userGuesses = session.players[userId] ?? 0;
 
       if (userGuesses >= session.limit) {
@@ -25,19 +27,32 @@ export function setupMessageHandler(client: Client) {
       }
 
       if (guess === session.target) {
+        // User guessed the correct idol
         session.active = false;
+        // Remove the session from gameSessions
+
+        delete gameSessions[channelId];
 
         const guess_reward = config.Guess_reward;
         const starterReward = Math.ceil(guess_reward * 0.60);
 
-        let revealMsg = `🎉 ${username} guessed right! It was **${session.target}**. +${guess_reward} coins awarded! \nA percentage of the prize was also given to the coordinator. +${starterReward} `;
+        let revealMsg = `🎉 ${userNamePing} guessed right! It was **${session.target}**.`;
+
+        if (config.Unbelievaboat_key !== '0') {
+          await awardCurrency(userId, guess_reward);
+          await awardCurrency(session.starterId, starterReward);
+          revealMsg += ` +${guess_reward} coins awarded! \nA percentage of the prize was also given to the coordinator. +${starterReward}`;
+        }
+
+        await addPoints(userId, userName, 3);
+        await addPoints(session.starterId, session.starterName, 1);
+
         if (session.imageUrl) {
           revealMsg += `\n**Image Reveal:**\n${session.imageUrl}`;
         }
 
         await message.channel.send(revealMsg);
-        await awardCurrency(userId, guess_reward);
-        await awardCurrency(session.starterId, starterReward);
+
       } else if (session.groupname && guess === session.groupname) {
         await message.react('✅');
       } else {

@@ -2,7 +2,7 @@ import { Client, Events, TextChannel, EmbedBuilder, Interaction } from 'discord.
 import { awardCurrency, subtractCurrency } from '../utils/unbelieva';
 import { addPoints, subtractPoints, removePlayer, getLeaderboard, LeaderboardEntry } from '../utils/pointsManager';
 import { getUserFromId } from '../utils/gameUtils';
-import { queryGroq } from '../utils/aiUtils';
+import { queryAI } from '../utils/aiUtils';
 import config from '../config';
 import { gameSessions, adminUserIds } from '../utils/botConstants';
 
@@ -47,6 +47,7 @@ export function setupInteractionHandler(client: Client) {
             active: true,
             players: {},
             starterId: userId,
+            starterName: interaction.user.username,
             imageUrl
           };
 

@@ -18,6 +18,7 @@ interface BotConfig {
   Unbelievaboat_key: string;
   Guess_reward: number;
   GroqApiKey: string;
+  GeminiApiKey: string;
   SizeChannelId: string;
 }
 
@@ -30,6 +31,7 @@ const config: BotConfig = {
   Unbelievaboat_key: getEnvVar('unbelievaboat_api_key'),
   Guess_reward: parseInt(getEnvVar('Guess_reward_amount'), 10),
   GroqApiKey: getEnvVar('groq_api_key'),
+  GeminiApiKey: getEnvVar('gemini_api_key'),
   SizeChannelId: getEnvVar('size_channel_id'),
 };
 

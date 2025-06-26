@@ -9,6 +9,7 @@ export interface GameSession {
   active: boolean;
   players: Record<string, number>;
   starterId: string;
+  starterName: string;
   imageUrl?: string;
 }
 
