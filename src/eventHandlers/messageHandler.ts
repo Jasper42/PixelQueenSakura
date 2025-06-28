@@ -44,8 +44,8 @@ export function setupMessageHandler(client: Client) {
           revealMsg += ` +${guess_reward} coins awarded! \nA percentage of the prize was also given to the coordinator. +${starterReward}`;
         }
 
-        await addPoints(userId, userName, 3);
-        await addPoints(session.starterId, session.starterName, 1);
+        addPoints(userId, userName, 3);
+        addPoints(session.starterId, session.starterName, 1);
 
         if (session.imageUrl) {
           revealMsg += `\n**Image Reveal:**\n${session.imageUrl}`;
