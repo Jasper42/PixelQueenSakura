@@ -12,4 +12,5 @@ if not exist "dist\index.js" (
 )
 echo Starting bot...
 npm run start
-pause
+echo Bot has stopped. Press any key to close this window.
+pause >nul
