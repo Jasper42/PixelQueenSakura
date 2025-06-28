@@ -1,7 +1,7 @@
 @echo off
 
 echo Updating the bot from GitHub...
-git pull origin main
+git pull origin master
 if errorlevel 1 (
     echo Git pull failed! Please check your internet connection and repository setup.
     pause
