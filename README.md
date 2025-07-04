@@ -1,4 +1,4 @@
-Pixel Queen Sakura
+PQS Bot setup guide
 ==========================
 
 A fun Discord bot to play with! This guide will help you set up and run the bot on your PC.
